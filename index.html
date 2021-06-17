@@ -120,12 +120,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -154,6 +154,86 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/17/C2061-Error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="devjeer">
+      <meta itemprop="description" content="description test">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="devjeer">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/17/C2061-Error/" class="post-title-link" itemprop="url">C2061 Error</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-06-17 22:04:31 / 修改时间：22:14:34" itemprop="dateCreated datePublished" datetime="2021-06-17T22:04:31+08:00">2021-06-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Compiler-Error-C2601"><a href="#Compiler-Error-C2601" class="headerlink" title="Compiler Error C2601"></a>Compiler Error C2601</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>C2601报错提示：</p>
+<ul>
+<li>“function”: 本地函数定义是非法的</li>
+<li>在C2601错误位置之前，source code可能有一个额外的{</li>
+</ul>
+<p>ex:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> j)</span></span>&#123;    <span class="comment">// C2601</span></span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h2><p>在main中定义了function函数，导致编译器无法识别{</p>
+<h2 id="踩过的坑："><a href="#踩过的坑：" class="headerlink" title="踩过的坑："></a>踩过的坑：</h2><p>合并代码之后出现了这个错误，查找官方文档如上所述</p>
+<p>通过比对合并前后代码发现：前后源码文件编码方式出现了差异，主要为：</p>
+<ul>
+<li>字符编码不同</li>
+<li>换行符的编码不同</li>
+</ul>
+<p>通过修改上述两种编码方式成功得到解决。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -298,7 +378,7 @@
 <img src="/2021/06/15/hexo%E9%83%A8%E7%BD%B2%E9%81%BF%E5%85%8D%E5%A4%9A%E6%AC%A1%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81/03.png" class="">
 
 <h1 id="修改-config文件"><a href="#修改-config文件" class="headerlink" title="修改_config文件"></a>修改_config文件</h1><p>修改Hexo的配置文件_config.yml，将deploy下的repo修改为ssh验证</p>
-<p>ssh验证的前缀为<a href="mailto:&#x67;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#x6f;&#x6d;</a>:</p>
+<p>ssh验证的前缀为<a href="mailto:&#103;&#x69;&#116;&#64;&#103;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#109;">&#103;&#x69;&#116;&#64;&#103;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#109;</a>:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  # repository: https://github.com/DevJeer/DevJeer.github.io.git</span><br><span class="line">  repo: git@github.com:DevJeer/DevJeer.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
 
 
