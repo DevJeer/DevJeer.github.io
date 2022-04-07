@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>hexo部署避免多次输入用户名和密码</title>
+    <url>/2021/06/15/hexo%E9%83%A8%E7%BD%B2%E9%81%BF%E5%85%8D%E5%A4%9A%E6%AC%A1%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81/</url>
+    <content><![CDATA[<h1 id="生成秘钥"><a href="#生成秘钥" class="headerlink" title="生成秘钥"></a>生成秘钥</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa // 生成秘钥</span><br><span class="line">// 之后需要连续按Enter  表示不需要设置什么东西</span><br><span class="line">// 会生成两个文件.pub后缀的为public秘钥 另一个为private</span><br></pre></td></tr></table></figure>
+
+<p>生成之后的秘钥在C:/Users/Name/.ssh/下面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 查看秘钥</span><br><span class="line">cd ~/.ssh</span><br><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<img src="/2021/06/15/hexo%E9%83%A8%E7%BD%B2%E9%81%BF%E5%85%8D%E5%A4%9A%E6%AC%A1%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81/01.png" class="">
+
+<h1 id="在Github上面添加Key"><a href="#在Github上面添加Key" class="headerlink" title="在Github上面添加Key"></a>在Github上面添加Key</h1><p>点击右上角Setting—&gt;SSH and GPG keys</p>
+<p>点击New SSH key，如下图所示，填写Title和Key就会完成创建</p>
+<img src="/2021/06/15/hexo%E9%83%A8%E7%BD%B2%E9%81%BF%E5%85%8D%E5%A4%9A%E6%AC%A1%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81/02.png" class="">
+
+
+
+<p>测试ssh设置是否成功</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>成功之后如下图所示</p>
+<img src="/2021/06/15/hexo%E9%83%A8%E7%BD%B2%E9%81%BF%E5%85%8D%E5%A4%9A%E6%AC%A1%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81/03.png" class="">
+
+<h1 id="修改-config文件"><a href="#修改-config文件" class="headerlink" title="修改_config文件"></a>修改_config文件</h1><p>修改Hexo的配置文件_config.yml，将deploy下的repo修改为ssh验证</p>
+<p>ssh验证的前缀为<a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;">&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;</a>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  # repository: https://github.com/DevJeer/DevJeer.github.io.git</span><br><span class="line">  repo: git@github.com:DevJeer/DevJeer.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo插入图片</title>
+    <url>/2021/06/15/hexo%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<h1 id="创建资源文件夹"><a href="#创建资源文件夹" class="headerlink" title="创建资源文件夹"></a>创建资源文件夹</h1><p>将config.yml文件中的post_asset_folder选项设置为true打开</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_config.yml</span><br><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
+
+<p>当资源文件管理功能打开后，hexo将会在每一次通过hexo new [layout]&lt;name&gt;命令创建新文章时自动创建一个文件夹，而且这个资源文件夹会有与这个文章一样的名字，与当前文章有关的资源都会放在这个关联文件夹中，我们可以使用相对路径来引用它们。</p>
+<img src="/2021/06/15/hexo%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/01.png" class="">
+
+<h2 id="使用图片"><a href="#使用图片" class="headerlink" title="使用图片"></a>使用图片</h2><p>我们可以使用相对路径来访问上一步我们创建的对应文章的文件夹</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% asset_img &lt;path&gt; [description] %&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>markdown小技巧</title>
+    <url>/2021/06/16/markdown%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h1 id="markdown显示尖括号"><a href="#markdown显示尖括号" class="headerlink" title="markdown显示尖括号"></a>markdown显示尖括号</h1><p>在markdown中直接输入尖括号是无法显示的</p>
+<p>如果要使用尖括号，需要以“&amp;”开头，以“;”结尾，中间加上字符对应的编码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;   // &amp;lt;  表示左尖括号   左尖括号对应的编码是lt</span><br><span class="line">&gt;   // &amp;gt;  表示右尖括号   右尖括号对应的编码是gt</span><br><span class="line">&lt;=  // &amp;le;  </span><br><span class="line">&gt;=  // &amp;ge;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>&lt;test&gt;</p>
+</blockquote>
+<h1 id="to-be-continue"><a href="#to-be-continue" class="headerlink" title="to be continue"></a>to be continue</h1>]]></content>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C2061 Error</title>
+    <url>/2021/06/17/C2061-Error/</url>
+    <content><![CDATA[<h1 id="Compiler-Error-C2601"><a href="#Compiler-Error-C2601" class="headerlink" title="Compiler Error C2601"></a>Compiler Error C2601</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>C2601报错提示：</p>
+<ul>
+<li>“function”: 本地函数定义是非法的</li>
+<li>在C2601错误位置之前，source code可能有一个额外的{</li>
+</ul>
+<p>ex:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> j)</span></span>&#123;    <span class="comment">// C2601</span></span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h2><p>在main中定义了function函数，导致编译器无法识别{</p>
+<h2 id="踩过的坑："><a href="#踩过的坑：" class="headerlink" title="踩过的坑："></a>踩过的坑：</h2><p>合并代码之后出现了这个错误，查找官方文档如上所述</p>
+<p>通过比对合并前后代码发现：前后源码文件编码方式出现了差异，主要为：</p>
+<ul>
+<li>字符编码不同</li>
+<li>换行符的编码不同</li>
+</ul>
+<p>通过修改上述两种编码方式成功得到解决。</p>
+]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vs2019修改字符编码方式</title>
+    <url>/2021/06/17/vs2019%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="修改字符编码方式"><a href="#修改字符编码方式" class="headerlink" title="修改字符编码方式"></a>修改字符编码方式</h1><h2 id="工具-自定义"><a href="#工具-自定义" class="headerlink" title="工具/自定义"></a>工具/自定义</h2><img src="/2021/06/17/vs2019%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/step01.png" class="">
+
+<h2 id="命令页面-菜单栏-添加命令"><a href="#命令页面-菜单栏-添加命令" class="headerlink" title="命令页面/菜单栏/添加命令"></a>命令页面/菜单栏/添加命令</h2><img src="/2021/06/17/vs2019%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/step02.png" class="">
+
+<h2 id="添加命令页面-—-gt-类别-文件-—-gt-命令-高级保存选项"><a href="#添加命令页面-—-gt-类别-文件-—-gt-命令-高级保存选项" class="headerlink" title="添加命令页面 —&gt; 类别(文件) —&gt; 命令(高级保存选项)"></a>添加命令页面 —&gt; 类别(文件) —&gt; 命令(高级保存选项)</h2><img src="/2021/06/17/vs2019%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/step03.png" class="">
+
+<h2 id="选择高级保存选项"><a href="#选择高级保存选项" class="headerlink" title="选择高级保存选项"></a>选择高级保存选项</h2><img src="/2021/06/17/vs2019%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/step04.png" class="">
+
+<h2 id="修改编码方式"><a href="#修改编码方式" class="headerlink" title="修改编码方式"></a>修改编码方式</h2><img src="/2021/06/17/vs2019%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F/step05.png" class="">
+
+<ul>
+<li>1为修改编码方式</li>
+<li>2为修改行尾编码方式</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>vs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C2061 Error</title>
+    <url>/2021/06/17/C2601-Error/</url>
+    <content><![CDATA[<h1 id="Compiler-Error-C2601"><a href="#Compiler-Error-C2601" class="headerlink" title="Compiler Error C2601"></a>Compiler Error C2601</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>C2601报错提示：</p>
+<ul>
+<li>“function”: 本地函数定义是非法的</li>
+<li>在C2601错误位置之前，source code可能有一个额外的{</li>
+</ul>
+<p>ex:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> j)</span></span>&#123;    <span class="comment">// C2601</span></span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h2><p>在main中定义了function函数，导致编译器无法识别{</p>
+<h2 id="踩过的坑："><a href="#踩过的坑：" class="headerlink" title="踩过的坑："></a>踩过的坑：</h2><p>合并代码之后出现了这个错误，查找官方文档如上所述</p>
+<p>通过比对合并前后代码发现：前后源码文件编码方式出现了差异，主要为：</p>
+<ul>
+<li>字符编码不同</li>
+<li>换行符的编码不同</li>
+</ul>
+<p>通过修改上述两种编码方式成功得到解决。</p>
+]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux常用操作</title>
+    <url>/2021/06/22/linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="在两个服务器之间拷贝文件"><a href="#在两个服务器之间拷贝文件" class="headerlink" title="在两个服务器之间拷贝文件"></a>在两个服务器之间拷贝文件</h1><p>使用scp命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">scp &lt;package&gt; root@id + : + path</span><br><span class="line">scp update_package.tar.gz root@172.16.205.52:data/test_branch/hjf/cbimraas_new/</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+</search>
